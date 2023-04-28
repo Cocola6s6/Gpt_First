@@ -29,7 +29,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class GptService {
 
-    @Value("${open.ai.ur:https://api.openai.com}")
+    @Value("${open.ai.url:https://api.openai.com}")
     private String url;
 
     @Value("${open.ai.token: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}")

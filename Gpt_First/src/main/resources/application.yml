@@ -6,3 +6,8 @@ spring:
     name: GPT_First
   main:
     allow-bean-definition-overriding: true
+
+open:
+  ai:
+    token: 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
+    url: https://api.openai.com
