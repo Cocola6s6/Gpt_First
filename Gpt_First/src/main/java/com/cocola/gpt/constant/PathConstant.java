@@ -10,6 +10,5 @@ public class PathConstant {
         public static String CREATE_COMPLETION = "/v1/completions";
         //创建对话
         public static String CREATE_CHAT_COMPLETION = "/v1/chat/completions";
-
     }
 }

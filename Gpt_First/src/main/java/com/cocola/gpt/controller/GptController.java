@@ -8,14 +8,9 @@ import com.cocola.gpt.service.GptService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * @Author: yangshiyuan
- * @Date: 2023/3/14
- * @Description: 附件管理
- */
 @Validated
 @RestController
-@RequestMapping("/GPT")
+@RequestMapping("/v1/gpt")
 public class GptController {
 
     private final GptService gptService;

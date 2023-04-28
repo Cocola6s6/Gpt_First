@@ -2,6 +2,7 @@ package com.cocola.gpt.service;
 
 
 import com.alibaba.fastjson.JSON;
+import com.cocola.gpt.bo.GptRequestBo;
 import com.cocola.gpt.constant.PathConstant;
 import com.cocola.gpt.controller.vo.ChatMessage;
 import com.cocola.gpt.controller.vo.GptRequestVo;
@@ -35,14 +36,14 @@ public class GptService {
     private String token;
 
     public List<GptResponseVo> chatGpt(GptRequestVo requestVo) {
-        ChatMessage chatMessage = new ChatMessage();
-        chatMessage.setRole("cocola").setContent("test");
-        requestVo.setMessages(Arrays.asList(chatMessage)).setMax_tokens(500).setTemperature(1.0);
+        GptRequestBo bo = new GptRequestBo();
+        BeanUtils.copyProperties(requestVo, bo);
+
         Map<String, Object> header = new HashMap<>();
         header.put("Authorization", "Bearer " + token);
         log.info("====================>url={}, header={}", url + PathConstant.COMPLETIONS.CREATE_CHAT_COMPLETION, header.get("Authorization"));
         HttpClientUtil.HttpCommonResposne response =
-                HttpClientUtil.postJsonForString(url + PathConstant.COMPLETIONS.CREATE_CHAT_COMPLETION, JSON.toJSONString(requestVo), header);
+                HttpClientUtil.postJsonForString(url + PathConstant.COMPLETIONS.CREATE_CHAT_COMPLETION, JSON.toJSONString(bo), header);
         log.info("====================>response={}", response);
         return null;
     }
