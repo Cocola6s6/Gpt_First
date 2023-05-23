@@ -6,6 +6,7 @@ import java.util.List;
 
 @Data
 public class GptResponseVo {
+
     private String id;
 
     private String object;
@@ -17,4 +18,6 @@ public class GptResponseVo {
     private ChatUsage usage;
 
     private List<ChatChoice> choices;
+
+    private GptError error;
 }

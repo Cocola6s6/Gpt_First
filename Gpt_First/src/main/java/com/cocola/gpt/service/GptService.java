@@ -6,6 +6,7 @@ import com.cocola.gpt.config.OpenAiConfig;
 import com.cocola.gpt.constant.PathConstant;
 import com.cocola.gpt.controller.vo.GptRequestVo;
 import com.cocola.gpt.controller.vo.GptResponseVo;
+import com.cocola.gpt.exception.GptException;
 import com.cocola.gpt.utils.HttpClientUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +14,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -37,6 +37,11 @@ public class GptService {
         HttpClientUtil.HttpCommonResposne response =
                 HttpClientUtil.postJsonForString(openAiConfig.getUrl() + PathConstant.COMPLETIONS.CREATE_CHAT_COMPLETION, JSON.toJSONString(bo), header);
         log.info("====================>response={}", response);
-        return JSON.parseObject(response.getBody(), GptResponseVo.class);
+
+        GptResponseVo responseVo = JSON.parseObject(response.getBody(), GptResponseVo.class);
+        if (!response.getSuccess()) {
+            throw new GptException(50001, responseVo.getError().getMessage());
+        }
+        return responseVo;
     }
 }

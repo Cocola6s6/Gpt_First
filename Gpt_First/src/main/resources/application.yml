@@ -9,4 +9,4 @@ spring:
 
 openai:
   url: https://api.openai.com
-  token: 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
+  token: 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
