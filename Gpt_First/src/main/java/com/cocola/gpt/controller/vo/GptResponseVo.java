@@ -26,11 +26,8 @@ public class GptResponseVo {
      */
     private final int statusCode;
 
-
     @Override
     public String toString() {
         return String.format("[success:%s,respStr:%s,statusCode:%s]", success, respStr, statusCode);
     }
-
-
 }

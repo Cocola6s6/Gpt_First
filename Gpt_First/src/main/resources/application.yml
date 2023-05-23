@@ -7,7 +7,6 @@ spring:
   main:
     allow-bean-definition-overriding: true
 
-open:
-  ai:
-    token: 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
-    url: https://api.openai.com
+openai:
+  url: https://api.openai.com
+  token: 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

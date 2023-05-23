@@ -4,6 +4,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -14,19 +16,21 @@ import java.util.List;
 @Data
 @Accessors(chain = true)
 public class GptRequestVo {
-    String model;
+    @NotBlank(message = "model can not be blank")
+    private String model;
 
-    List<ChatMessage> messages;
+    @NotNull(message = "messages can not be null")
+    private List<ChatMessage> messages;
 
-    Double temperature;
+    private Double temperature;
 
-    Integer n;
+    private Integer n;
 
-    Boolean stream;
+    private Boolean stream;
 
-    List<String> stop;
+    private List<String> stop;
 
-    Integer max_tokens;
+    private Integer max_tokens;
 
-    String user;
+    private String user;
 }

@@ -33,7 +33,7 @@ public class GptRequestBo {
 
     public GptRequestBo() {
         model = "gpt-3.5-turbo-0301";
-        temperature = 0.7;
-        user = "cocola";
+        temperature = 1.0;
+        user = "user";
     }
 }
