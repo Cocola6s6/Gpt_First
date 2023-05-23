@@ -1,33 +1,20 @@
 package com.cocola.gpt.controller.vo;
 
 import lombok.Data;
-import org.springframework.http.HttpMethod;
+
+import java.util.List;
 
 @Data
 public class GptResponseVo {
+    private String id;
 
-    /**
-     * 操作是否成功
-     */
-    private final boolean success;
+    private String object;
 
-    /**
-     * 返回的内容
-     */
-    private final String respStr;
+    private Long created;
 
-    /**
-     * 请求的地址
-     */
-    private final HttpMethod method;
+    private String model;
 
-    /**
-     * statusCode
-     */
-    private final int statusCode;
+    private ChatUsage usage;
 
-    @Override
-    public String toString() {
-        return String.format("[success:%s,respStr:%s,statusCode:%s]", success, respStr, statusCode);
-    }
+    private List<ChatChoice> choices;
 }

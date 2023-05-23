@@ -27,7 +27,7 @@ import java.util.Map;
 public class GptService {
     private final OpenAiConfig openAiConfig;
 
-    public List<GptResponseVo> chatGpt(GptRequestVo requestVo) {
+    public GptResponseVo chatGpt(GptRequestVo requestVo) {
         GptRequestBo bo = new GptRequestBo();
         BeanUtils.copyProperties(requestVo, bo);
 
@@ -37,6 +37,6 @@ public class GptService {
         HttpClientUtil.HttpCommonResposne response =
                 HttpClientUtil.postJsonForString(openAiConfig.getUrl() + PathConstant.COMPLETIONS.CREATE_CHAT_COMPLETION, JSON.toJSONString(bo), header);
         log.info("====================>response={}", response);
-        return null;
+        return JSON.parseObject(response.getBody(), GptResponseVo.class);
     }
 }
