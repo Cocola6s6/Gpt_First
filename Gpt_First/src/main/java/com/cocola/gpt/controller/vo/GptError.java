@@ -12,4 +12,9 @@ public class GptError {
     private String param;
 
     private String code;
+
+    @Override
+    public String toString() {
+        return String.format("type:%s, code:%s, message:%s, param:%s", type, code, message, param);
+    }
 }

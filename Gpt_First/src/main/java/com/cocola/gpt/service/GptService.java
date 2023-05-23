@@ -40,7 +40,7 @@ public class GptService {
 
         GptResponseVo responseVo = JSON.parseObject(response.getBody(), GptResponseVo.class);
         if (!response.getSuccess()) {
-            throw new GptException(50001, responseVo.getError().getMessage());
+            throw new GptException(50001, responseVo.getError().toString());
         }
         return responseVo;
     }
