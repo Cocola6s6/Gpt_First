@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.cocola</groupId>
-    <artifactId>Gpt_First</artifactId>
+    <artifactId>gpt-java</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Gpt_First</name>
-    <description>Gpt_First</description>
+    <name>gpt-java</name>
+    <description>gpt-java</description>
     <properties>
         <java.version>8</java.version>
         <cola.version>4.3.1</cola.version>

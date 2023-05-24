@@ -5,10 +5,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
 @SpringBootApplication(exclude= {DataSourceAutoConfiguration.class})
-public class GptFirstApplication {
+public class GptJavaApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(GptFirstApplication.class, args);
+        SpringApplication.run(GptJavaApplication.class, args);
     }
 
 }

@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: GPT_First
+    name: gpt-java
   main:
     allow-bean-definition-overriding: true
 
