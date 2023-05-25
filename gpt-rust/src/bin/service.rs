@@ -19,50 +19,73 @@ async fn main() {
     let env_key = env::var("OPENAI_KEY").unwrap();
     let api_key = read_input("Enter Api-Key:").unwrap_or_default();
     let api_key = if api_key.is_empty() { env_key } else { api_key };
-    println!("{}", api_key);
-    loop {
-        // 1、获取文本
-        let cmd = read_input("What do you want to do:(1:chat 2:analysis code)").unwrap();
-        let cmd = if cmd.is_empty() { "1".to_string() } else { cmd };
-        match cmd.as_str() {
-            "1" => {
-                // 2、处理文本
-                let text = read_input("Ask me something here:").unwrap();
-                let promat = text;
-                // 3、调用OpenAi接口
-                let response = chatAI(&api_key, &promat).await;
-                match response {
-                    Ok(value) => println!("{:?}", value),
-                    Err(error) => println!("{:?}", error),
-                }
-            }
-            "2" => {
-                // 2、处理文本
-                let text = read_input("Input the code here:").unwrap();
-                let prompt = getPromptTemplate(&text).await;
+    println!("{:?}", api_key);
 
-                // 3、调用OpenAi接口
-                let response = chatAI(&api_key, &prompt).await;
-                match response {
-                    Ok(value) => println!("{:?}", value),
-                    Err(error) => println!("{:?}", error),
-                }
-            }
-            "exit" => {
-                break;
-            }
-            _ => (),
+    let handle_response = |response| match response {
+        Ok(value) => println!("{:?}", value),
+        Err(error) => println!("{:?}", error),
+    };
+
+    let cmd_options = [("1", "chat"), ("2", "analysis code"), ("3", "jaychou")];
+    loop {
+        println!("<==================================");
+        for (option, desc) in cmd_options {
+            println!("{}:{}", option, desc);
         }
+
+        // 1、获取文本
+        let cmd = read_input("Enter your choice:").unwrap_or_default();
+        let cmd = if cmd.is_empty() { "1".to_string() } else { cmd };
+
+        if cmd.eq("exit") {
+            break;
+        }
+        let text = read_input("Ask me something here:").unwrap();
+
+        // 2、处理文本
+        let prompt = handle_text(&cmd, &text);
+
+        // 3、调用OpenAi接口
+        let response = call_openai(&api_key, &prompt).await;
+        handle_response(response);
+
+        println!("==================================>");
     }
 }
 
-pub async fn getPromptTemplate(text: &str) -> String {
-    format!(
-        "我将给你一段代码，请你分析一下这段代码的时间复杂度、内存使用量、性能和可维护性，并且给出优化方案。代码如下:{}",
-         text)
+pub trait Prompt {
+    fn getPromptTemplate(text: &str) -> String;
 }
 
-pub async fn chatAI(api_key: &str, prompt: &str) -> Result<String, MyError> {
+pub struct AnalysisPromat;
+pub struct JayChouPromat;
+
+impl Prompt for AnalysisPromat {
+    fn getPromptTemplate(text: &str) -> String {
+        format!(
+            "我将给你一段代码，请你分析一下这段代码的时间复杂度、内存使用量、性能和可维护性，并且给出优化方案。代码如下:{}",
+             text)
+    }
+}
+
+impl Prompt for JayChouPromat {
+    fn getPromptTemplate(text: &str) -> String {
+        format!(
+            "我将给你一些歌词，请你分析一下这段歌词是不是周杰伦的歌词，如果是就直接告诉我它的歌名，如果有多个，也请一一列举出来。歌词如下:{}",
+             text)
+    }
+}
+
+pub fn handle_text(cmd: &str, text: &str) -> String {
+    match cmd {
+        "1" => text.to_string(),
+        "2" => AnalysisPromat::getPromptTemplate(text),
+        "3" => JayChouPromat::getPromptTemplate(text),
+        _ => "".to_string(),
+    }
+}
+
+pub async fn call_openai(api_key: &str, prompt: &str) -> Result<String, MyError> {
     // create httpclient
     let client = Client::new();
     let url = "https://api.openai.com/v1/chat/completions";
