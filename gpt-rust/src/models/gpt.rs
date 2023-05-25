@@ -2,25 +2,25 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Deserialize, Serialize, Debug, Clone)]
 pub struct GptResponse {
-    id: String, // conversation_id?
-    choices: Vec<Choice>,
+    pub id: String, // conversation_id?
+    pub choices: Vec<Choice>,
     // error: Error,
 }
 
 #[derive(Deserialize, Serialize, Debug, Clone)]
 pub struct Choice {
-    message: Message,
+    pub message: Message,
 }
 
 #[derive(Deserialize, Serialize, Debug, Clone)]
 pub struct Message {
-    content: String,
+    pub content: String,
 }
 
 #[derive(Deserialize, Serialize, Debug, Clone)]
 pub struct Error {
-    message: String,
-    _type: String,
-    param: String,
-    code: String,
+    pub message: String,
+    pub _type: String,
+    pub param: String,
+    pub code: String,
 }
