@@ -9,7 +9,7 @@
 		</Console>
 
 		<!-- 输出错误日志到Kafka topic 你自己的topic,bootstrap.servers 对应你自己的ip和端口-->
-		<Kafka name="KAFKA" topic="xdclass-topic">
+		<Kafka name="KAFKA" topic="log-topic">
 			<ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY" />
 			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss,SSS}:%4p %t (%F:%L) - %m%n" />
 			<Property name="bootstrap.servers">110.41.21.178:9092</Property>
@@ -27,6 +27,6 @@
 			<AppenderRef ref="KAFKA"/>
 		</Logger>
 
-		<Logger name="org.apache.kafka" level="INFO" /> <!-- avoid recursive logging -->
+		<Logger name="org.apache.kafka" level="debug" /> <!-- avoid recursive logging -->
 	</Loggers>
 </Configuration>

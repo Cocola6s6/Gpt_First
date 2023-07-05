@@ -10,3 +10,6 @@ spring:
 openai:
   url: https://api.openai.com
   token: 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
+
+logging:
+  config: classpath:log4j2.xml
